@@ -37,7 +37,7 @@
             padding: 0 20px;
         }
 
-        /* Header Styles */
+
         header {
             background: linear-gradient(135deg, var(--primary), var(--primary-dark));
             color: white;
@@ -87,7 +87,6 @@
             opacity: 0.9;
         }
 
-        /* Card Grid */
         .card-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -146,7 +145,7 @@
             font-weight: bold;
         }
 
-        /* Toggle Section */
+        
         .toggle-section {
             margin-bottom: 3rem;
         }
@@ -230,7 +229,6 @@
             color: #ef4444;
         }
 
-        /* Contact Section */
         .contact-section {
             background: white;
             border-radius: var(--radius);
@@ -309,7 +307,7 @@
             font-weight: 600;
             cursor: pointer;
             width: 100%;
-            transition: background 0.3s;
+            transition: 0.3s;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -353,7 +351,7 @@
             text-decoration: underline;
         }
 
-        /* Footer */
+
         footer {
             background: var(--dark);
             color: white;
@@ -366,13 +364,11 @@
             margin-bottom: 0.5rem;
         }
 
-        /* Animations */
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Responsive */
         @media (max-width: 768px) {
             .comparison {
                 grid-template-columns: 1fr;
@@ -398,7 +394,7 @@
             <div class="logo">
                 <i class="fas fa-laptop-code"></i>
             </div>
-            <h1>Tech Blog Best Practices</h1>
+            <h1>Tech Blog Best, Practices</h1>
             <p>Guidelines for writing engaging, technical, and human-friendly articles</p>
         </div>
     </header>
@@ -555,8 +551,8 @@
         </div>
     </footer>
 
-    <script>
-        // Toggle examples section
+    <script src="index .js">
+       
         const toggleBtn = document.getElementById('toggleBtn');
         const examples = document.getElementById('examples');
         
@@ -570,35 +566,29 @@
             }
         });
         
-        // Handle form submission
         const contactForm = document.getElementById('contactForm');
         const successMessage = document.getElementById('successMessage');
         
         contactForm.addEventListener('submit', function(event) {
             event.preventDefault();
             
-            // Get form data
             const firstName = document.getElementById('firstName').value;
             const lastName = document.getElementById('lastName').value;
             const email = document.getElementById('email').value;
             const subject = document.getElementById('subject').value;
             const message = document.getElementById('message').value;
             
-            // Create mailto link with form data
             const mailtoLink = `mailto:salimabdu579@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(
                 `Name: ${firstName} ${lastName}\nEmail: ${email}\n\nMessage:\n${message}`
             )}`;
-            
-            // Open email client
+
             window.open(mailtoLink, '_blank');
             
-            // Show success message
+       
             successMessage.style.display = 'block';
-            
-            // Reset form
+
             contactForm.reset();
-            
-            // Hide success message after 5 seconds
+       
             setTimeout(() => {
                 successMessage.style.display = 'none';
             }, 5000);
