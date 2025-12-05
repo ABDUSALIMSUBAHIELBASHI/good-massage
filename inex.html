@@ -1,0 +1,2698 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Collection 2025</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* ==================== CSS VARIABLES ==================== */
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #e74c3c;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+            --success: #2ecc71;
+            --warning: #f39c12;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            --border-radius: 10px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --animation-duration: 0.5s;
+        }
+
+        /* ==================== BASE STYLES ==================== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+            line-height: 1.6;
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        /* ==================== ANIMATIONS ==================== */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideUp {
+            from { 
+                transform: translateY(30px); 
+                opacity: 0; 
+            }
+            to { 
+                transform: translateY(0); 
+                opacity: 1; 
+            }
+        }
+
+        @keyframes slideDown {
+            from { 
+                transform: translateY(-30px); 
+                opacity: 0; 
+            }
+            to { 
+                transform: translateY(0); 
+                opacity: 1; 
+            }
+        }
+
+        @keyframes scaleIn {
+            from { 
+                transform: scale(0.9); 
+                opacity: 0; 
+            }
+            to { 
+                transform: scale(1); 
+                opacity: 1; 
+            }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        @keyframes shimmer {
+            0% { background-position: -1000px 0; }
+            100% { background-position: 1000px 0; }
+        }
+
+        @keyframes ripple {
+            0% { transform: scale(0); opacity: 1; }
+            100% { transform: scale(4); opacity: 0; }
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+
+        /* ==================== LOADING ANIMATIONS ==================== */
+        .loading-shimmer {
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 1000px 100%;
+            animation: shimmer 2s infinite linear;
+        }
+
+        /* ==================== AUTH SCREENS ==================== */
+        .auth-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        .auth-box {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            width: 100%;
+            max-width: 400px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            animation: scaleIn 0.6s ease-out;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .auth-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--secondary), var(--accent));
+        }
+
+        .auth-header {
+            text-align: center;
+            margin-bottom: 30px;
+            animation: slideDown 0.6s ease-out;
+        }
+
+        .auth-header h2 {
+            color: var(--primary);
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .auth-header p {
+            color: #666;
+            font-size: 1rem;
+        }
+
+        .auth-toggle {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 0.9rem;
+            color: #666;
+            animation: fadeIn 1s ease-out;
+        }
+
+        .auth-toggle a {
+            color: var(--secondary);
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .auth-toggle a:hover {
+            color: var(--accent);
+            text-decoration: underline;
+        }
+
+        /* ==================== MAIN APP CONTAINER ==================== */
+        .app-container {
+            display: none;
+            opacity: 0;
+            animation: fadeIn 0.8s ease-out forwards;
+        }
+
+        .app-container.active {
+            display: block;
+            opacity: 1;
+        }
+
+        /* ==================== HEADER ==================== */
+        header {
+            background: linear-gradient(135deg, var(--primary), #1a2530);
+            color: white;
+            padding: 30px 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            animation: slideDown 0.6s ease-out;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="%23000000" fill-opacity="0.1" d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,112C672,96,768,96,864,112C960,128,1056,160,1152,160C1248,160,1344,128,1392,112L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>');
+            background-size: cover;
+            opacity: 0.1;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 15px;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .logo i {
+            font-size: 3rem;
+            color: var(--accent);
+            text-shadow: 0 0 20px rgba(231, 76, 60, 0.5);
+        }
+
+        .logo h1 {
+            font-size: 2.8rem;
+            background: linear-gradient(45deg, #fff, var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            margin-top: 20px;
+        }
+
+        .user-greeting {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            animation: slideUp 0.6s ease-out 0.3s both;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, var(--secondary), var(--accent));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 1.2rem;
+            animation: pulse 2s infinite;
+        }
+
+        .logout-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            animation: slideUp 0.6s ease-out 0.4s both;
+        }
+
+        .logout-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        /* ==================== MAIN CONTENT ==================== */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+            animation: slideUp 0.6s ease-out 0.5s both;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 25px;
+            box-shadow: var(--shadow);
+            text-align: center;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--secondary), var(--accent));
+        }
+
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 10px;
+            background: linear-gradient(45deg, var(--secondary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 1rem;
+        }
+
+        .dashboard {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+            animation: slideUp 0.6s ease-out 0.6s both;
+        }
+
+        .panel {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 25px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .panel:hover {
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .panel h2 {
+            color: var(--primary);
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--light);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .users-list {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .user-item {
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: var(--transition);
+            border: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            animation: slideUp 0.5s ease-out;
+        }
+
+        .user-item:hover {
+            background-color: #f8f9fa;
+            transform: translateX(5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .user-item.active {
+            background-color: #e3f2fd;
+            border-color: var(--secondary);
+            animation: pulse 1.5s infinite;
+        }
+
+        .user-name {
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .user-movie-count {
+            background: linear-gradient(45deg, var(--secondary), var(--accent));
+            color: white;
+            border-radius: 20px;
+            padding: 4px 12px;
+            font-size: 0.9rem;
+            transition: var(--transition);
+        }
+
+        .user-item:hover .user-movie-count {
+            transform: scale(1.1);
+        }
+
+        /* ==================== MOVIE CARDS ==================== */
+        .movies-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 25px;
+        }
+
+        .movie-card {
+            background: white;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            position: relative;
+            animation: scaleIn 0.5s ease-out;
+        }
+
+        .movie-card:hover {
+            transform: translateY(-10px) rotateX(5deg);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .movie-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--secondary), var(--accent));
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .movie-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .movie-poster {
+            height: 300px;
+            background-color: #ddd;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            transition: transform 0.5s ease;
+        }
+
+        .movie-card:hover .movie-poster {
+            transform: scale(1.05);
+        }
+
+        .movie-rating {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: linear-gradient(45deg, var(--warning), #e67e22);
+            color: white;
+            font-weight: bold;
+            padding: 8px 12px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            animation: bounce 2s infinite;
+        }
+
+        .movie-info {
+            padding: 20px;
+            background: white;
+        }
+
+        .movie-title {
+            font-weight: 700;
+            font-size: 1.3rem;
+            margin-bottom: 8px;
+            color: var(--primary);
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            min-height: 3.2rem;
+            transition: var(--transition);
+        }
+
+        .movie-card:hover .movie-title {
+            color: var(--secondary);
+        }
+
+        .movie-details {
+            color: #666;
+            font-size: 0.95rem;
+            margin-bottom: 15px;
+        }
+
+        .movie-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* ==================== BUTTONS ==================== */
+        .btn {
+            padding: 12px 20px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            position: relative;
+            overflow: hidden;
+            min-width: 120px;
+            justify-content: center;
+        }
+
+        .btn::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 100%);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .btn:hover::after {
+            opacity: 1;
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, var(--secondary), #2980b9);
+            color: white;
+            box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(45deg, #2980b9, var(--secondary));
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(52, 152, 219, 0.4);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(45deg, var(--light), #d5dbdb);
+            color: var(--dark);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-secondary:hover {
+            background: linear-gradient(45deg, #d5dbdb, var(--light));
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-danger {
+            background: linear-gradient(45deg, var(--accent), #c0392b);
+            color: white;
+            box-shadow: 0 4px 15px rgba(231, 76, 60, 0.3);
+        }
+
+        .btn-danger:hover {
+            background: linear-gradient(45deg, #c0392b, var(--accent));
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(231, 76, 60, 0.4);
+        }
+
+        .btn-success {
+            background: linear-gradient(45deg, var(--success), #27ae60);
+            color: white;
+            box-shadow: 0 4px 15px rgba(46, 204, 113, 0.3);
+        }
+
+        .btn-success:hover {
+            background: linear-gradient(45deg, #27ae60, var(--success));
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(46, 204, 113, 0.4);
+        }
+
+        /* ==================== MODALS ==================== */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            backdrop-filter: blur(5px);
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            width: 100%;
+            max-width: 500px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+            position: relative;
+            max-height: 90vh;
+            overflow-y: auto;
+            animation: scaleIn 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 1.8rem;
+            cursor: pointer;
+            color: #aaa;
+            transition: var(--transition);
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+
+        .close-modal:hover {
+            color: var(--accent);
+            background: #f5f5f5;
+            transform: rotate(90deg);
+        }
+
+        /* ==================== FORM STYLES ==================== */
+        .form-group {
+            margin-bottom: 25px;
+            animation: slideUp 0.5s ease-out;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--dark);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 14px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: var(--transition);
+            background: #f8f9fa;
+        }
+
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+            outline: none;
+            border-color: var(--secondary);
+            background: white;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+        }
+
+        /* ==================== COMMENTS SECTION ==================== */
+        .comments-section {
+            margin-top: 30px;
+            animation: slideUp 0.6s ease-out;
+        }
+
+        .comments-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--light);
+        }
+
+        .comments-list {
+            max-height: 300px;
+            overflow-y: auto;
+            padding: 10px;
+        }
+
+        .comment-item {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+            animation: slideUp 0.4s ease-out;
+            border-left: 4px solid var(--secondary);
+        }
+
+        .comment-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .comment-author {
+            font-weight: 600;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .comment-date {
+            font-size: 0.85rem;
+            color: #999;
+        }
+
+        .comment-text {
+            color: #555;
+            line-height: 1.5;
+        }
+
+        .comment-form {
+            margin-top: 20px;
+        }
+
+        /* ==================== OTHER STYLES ==================== */
+        .no-movies {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 60px 20px;
+            color: #777;
+            animation: slideUp 0.6s ease-out;
+        }
+
+        .no-movies i {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            color: #ddd;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        .loading i {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            color: var(--secondary);
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .user-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 15px;
+            animation: slideDown 0.6s ease-out;
+        }
+
+        .search-bar {
+            margin-bottom: 20px;
+            animation: slideUp 0.6s ease-out 0.7s both;
+        }
+
+        .search-bar input {
+            width: 100%;
+            padding: 14px 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 25px;
+            font-size: 1rem;
+            transition: var(--transition);
+            background: white;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .search-bar input:focus {
+            outline: none;
+            border-color: var(--secondary);
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1), 0 8px 25px rgba(52, 152, 219, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 25px;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            z-index: 1001;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            animation: slideIn 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .notification-success {
+            background: linear-gradient(45deg, rgba(46, 204, 113, 0.9), rgba(39, 174, 96, 0.9));
+            color: white;
+        }
+
+        .notification-error {
+            background: linear-gradient(45deg, rgba(231, 76, 60, 0.9), rgba(192, 57, 43, 0.9));
+            color: white;
+        }
+
+        .notification-warning {
+            background: linear-gradient(45deg, rgba(241, 196, 15, 0.9), rgba(243, 156, 18, 0.9));
+            color: white;
+        }
+
+        .notification-info {
+            background: linear-gradient(45deg, rgba(52, 152, 219, 0.9), rgba(41, 128, 185, 0.9));
+            color: white;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            margin-top: 40px;
+            color: rgba(255, 255, 255, 0.8);
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 20px 20px 0 0;
+            animation: slideUp 0.6s ease-out 0.8s both;
+            backdrop-filter: blur(10px);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* ==================== RIPPLE EFFECT ==================== */
+        .ripple {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .ripple:after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 5px;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.5);
+            opacity: 0;
+            border-radius: 100%;
+            transform: scale(1, 1) translate(-50%);
+            transform-origin: 50% 50%;
+        }
+
+        .ripple:focus:not(:active)::after {
+            animation: ripple 1s ease-out;
+        }
+
+        /* ==================== RESPONSIVE DESIGN ==================== */
+        @media (max-width: 992px) {
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
+            
+            .movies-container {
+                grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            }
+        }
+
+        @media (max-width: 768px) {
+            .actions-bar {
+                flex-direction: column;
+            }
+            
+            .movies-container {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            }
+            
+            header h1 {
+                font-size: 2.2rem;
+            }
+            
+            .logo {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .movies-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .panel {
+                padding: 20px;
+            }
+            
+            .modal-content {
+                padding: 20px;
+            }
+            
+            .auth-box {
+                padding: 30px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- ==================== AUTHENTICATION SCREENS ==================== -->
+    <div id="auth-container" class="auth-container">
+        <!-- Login Screen -->
+        <div id="login-screen" class="auth-box">
+            <div class="auth-header">
+                <div style="margin-bottom: 20px;">
+                    <i class="fas fa-film" style="font-size: 3rem; color: var(--secondary);"></i>
+                </div>
+                <h2>Welcome Back!</h2>
+                <p>Sign in to your movie collection</p>
+            </div>
+            
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="login-email"><i class="fas fa-envelope"></i> Email</label>
+                    <input type="email" id="login-email" required placeholder="Enter your email">
+                </div>
+                <div class="form-group">
+                    <label for="login-password"><i class="fas fa-lock"></i> Password</label>
+                    <input type="password" id="login-password" required placeholder="Enter your password">
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-success" style="width: 100%;">
+                        <i class="fas fa-sign-in-alt"></i> Sign In
+                    </button>
+                </div>
+            </form>
+            
+            <div class="auth-toggle">
+                <p>Don't have an account? <a href="#" id="show-signup">Sign Up</a></p>
+                <p style="margin-top: 10px; font-size: 0.8rem;">
+                    <i class="fas fa-info-circle"></i> Demo: Use any email/password
+                </p>
+            </div>
+        </div>
+
+        <!-- Signup Screen -->
+        <div id="signup-screen" class="auth-box" style="display: none;">
+            <div class="auth-header">
+                <div style="margin-bottom: 20px;">
+                    <i class="fas fa-user-plus" style="font-size: 3rem; color: var(--accent);"></i>
+                </div>
+                <h2>Create Account</h2>
+                <p>Join our movie community</p>
+            </div>
+            
+            <form id="signup-form">
+                <div class="form-group">
+                    <label for="signup-name"><i class="fas fa-user"></i> Full Name</label>
+                    <input type="text" id="signup-name" required placeholder="Enter your full name">
+                </div>
+                <div class="form-group">
+                    <label for="signup-email"><i class="fas fa-envelope"></i> Email</label>
+                    <input type="email" id="signup-email" required placeholder="Enter your email">
+                </div>
+                <div class="form-group">
+                    <label for="signup-password"><i class="fas fa-lock"></i> Password</label>
+                    <input type="password" id="signup-password" required placeholder="Create a password">
+                </div>
+                <div class="form-group">
+                    <label for="signup-confirm-password"><i class="fas fa-lock"></i> Confirm Password</label>
+                    <input type="password" id="signup-confirm-password" required placeholder="Confirm your password">
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-success" style="width: 100%;">
+                        <i class="fas fa-user-plus"></i> Create Account
+                    </button>
+                </div>
+            </form>
+            
+            <div class="auth-toggle">
+                <p>Already have an account? <a href="#" id="show-login">Sign In</a></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== MAIN APPLICATION ==================== -->
+    <div id="app-container" class="app-container">
+        <header>
+            <div class="container">
+                <div class="header-content">
+                    <div class="logo">
+                        <i class="fas fa-film"></i>
+                        <h1>Movie Collection 2025</h1>
+                    </div>
+                    <p>Your personal cinema universe. Curate, share, and discover.</p>
+                    
+                    <div class="user-info">
+                        <div class="user-greeting">
+                            <div class="user-avatar" id="user-avatar">U</div>
+                            <div>
+                                <div id="user-greeting-text">Welcome back!</div>
+                                <small id="user-email" style="opacity: 0.8;"></small>
+                            </div>
+                        </div>
+                        <button class="logout-btn" id="logout-btn">
+                            <i class="fas fa-sign-out-alt"></i> Logout
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div class="container">
+            <div class="stats">
+                <div class="stat-card">
+                    <div class="stat-value" id="total-users">0</div>
+                    <div class="stat-label">Total Users</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="total-movies">0</div>
+                    <div class="stat-label">Total Movies</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="avg-rating">0.0</div>
+                    <div class="stat-label">Average Rating</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="collection-size">0</div>
+                    <div class="stat-label">Collection Size</div>
+                </div>
+            </div>
+
+            <div class="dashboard">
+                <div class="panel">
+                    <h2><i class="fas fa-users"></i> Users</h2>
+                    <div class="search-bar">
+                        <input type="text" id="user-search" placeholder="Search users...">
+                    </div>
+                    <div class="users-list" id="users-list">
+                        <div class="loading">
+                            <i class="fas fa-spinner fa-spin"></i>
+                            <p>Loading users...</p>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary ripple" id="add-user-btn" style="width: 100%; margin-top: 20px;">
+                        <i class="fas fa-plus"></i> Add New User
+                    </button>
+                </div>
+
+                <div class="panel">
+                    <div class="user-header">
+                        <h2><i class="fas fa-user"></i> <span id="selected-user-name">Select a User</span></h2>
+                        <div>
+                            <button class="btn btn-secondary ripple" id="view-all-movies-btn">
+                                <i class="fas fa-film"></i> All Movies
+                            </button>
+                            <button class="btn btn-primary ripple" id="add-movie-btn">
+                                <i class="fas fa-plus"></i> Add Movie
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="search-bar">
+                        <input type="text" id="movie-search" placeholder="Search movies by title or director...">
+                    </div>
+                    
+                    <div class="movies-container" id="movies-container">
+                        <div class="loading">
+                            <i class="fas fa-film"></i>
+                            <p>Select a user or view all movies</p>
+                        </div>
+                    </div>
+
+                    <!-- Comments Section -->
+                    <div class="comments-section" id="comments-section" style="display: none;">
+                        <div class="comments-header">
+                            <h3><i class="fas fa-comments"></i> Comments</h3>
+                            <button class="btn btn-secondary btn-sm" id="add-comment-btn">
+                                <i class="fas fa-plus"></i> Add Comment
+                            </button>
+                        </div>
+                        <div class="comments-list" id="comments-list">
+                            <!-- Comments will be loaded here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Add User Modal -->
+        <div class="modal" id="add-user-modal">
+            <div class="modal-content">
+                <span class="close-modal">&times;</span>
+                <h2><i class="fas fa-user-plus"></i> Add New User</h2>
+                <form id="add-user-form">
+                    <div class="form-group">
+                        <label for="user-name"><i class="fas fa-user"></i> User Name *</label>
+                        <input type="text" id="user-name" required placeholder="Enter user name">
+                    </div>
+                    <div class="form-group">
+                        <label for="user-email"><i class="fas fa-envelope"></i> Email</label>
+                        <input type="email" id="user-email" placeholder="Enter email address">
+                    </div>
+                    <div class="form-group">
+                        <label for="user-bio"><i class="fas fa-info-circle"></i> Bio</label>
+                        <textarea id="user-bio" rows="3" placeholder="Tell us about this user..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-success ripple" style="width: 100%;">
+                            <i class="fas fa-save"></i> Save User
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Add Movie Modal -->
+        <div class="modal" id="add-movie-modal">
+            <div class="modal-content">
+                <span class="close-modal">&times;</span>
+                <h2><i class="fas fa-film"></i> Add New Movie</h2>
+                <form id="add-movie-form">
+                    <div class="form-group">
+                        <label for="movie-title"><i class="fas fa-ticket-alt"></i> Movie Title *</label>
+                        <input type="text" id="movie-title" required placeholder="Enter movie title">
+                    </div>
+                    <div class="form-group">
+                        <label for="release-year"><i class="fas fa-calendar"></i> Release Year</label>
+                        <input type="number" id="release-year" min="1900" max="2025" placeholder="Enter release year">
+                    </div>
+                    <div class="form-group">
+                        <label for="director"><i class="fas fa-user-tie"></i> Director</label>
+                        <input type="text" id="director" placeholder="Enter director name">
+                    </div>
+                    <div class="form-group">
+                        <label for="rating"><i class="fas fa-star"></i> IMDb Rating (0-10) *</label>
+                        <input type="number" id="rating" min="0" max="10" step="0.1" required placeholder="Enter rating">
+                    </div>
+                    <div class="form-group">
+                        <label for="poster"><i class="fas fa-image"></i> Poster URL</label>
+                        <input type="text" id="poster" placeholder="Enter poster image URL">
+                        <small style="color: #666;">Leave blank for default placeholder</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="movie-description"><i class="fas fa-align-left"></i> Description</label>
+                        <textarea id="movie-description" rows="3" placeholder="Enter movie description..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-success ripple" style="width: 100%;">
+                            <i class="fas fa-save"></i> Save Movie
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Add Comment Modal -->
+        <div class="modal" id="add-comment-modal">
+            <div class="modal-content">
+                <span class="close-modal">&times;</span>
+                <h2><i class="fas fa-comment"></i> Add Comment</h2>
+                <form id="add-comment-form">
+                    <div class="form-group">
+                        <label for="comment-text"><i class="fas fa-edit"></i> Your Comment *</label>
+                        <textarea id="comment-text" rows="4" required placeholder="Share your thoughts about this movie..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="comment-rating"><i class="fas fa-star"></i> Your Rating</label>
+                        <div style="display: flex; gap: 5px; margin-top: 5px;">
+                            <span class="star-rating">
+                                <i class="far fa-star" data-rating="1"></i>
+                                <i class="far fa-star" data-rating="2"></i>
+                                <i class="far fa-star" data-rating="3"></i>
+                                <i class="far fa-star" data-rating="4"></i>
+                                <i class="far fa-star" data-rating="5"></i>
+                            </span>
+                            <span id="rating-value" style="margin-left: 10px; color: var(--warning); font-weight: bold;"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-success ripple" style="width: 100%;">
+                            <i class="fas fa-paper-plane"></i> Post Comment
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <footer>
+            <div class="container">
+                <p>Movie Collection Manager &copy; 2025 | Built with HTML, CSS & JavaScript</p>
+                <p style="font-size: 0.9rem; margin-top: 10px;">
+                    <i class="fas fa-heart" style="color: var(--accent);"></i> 
+                    Made with passion for movie enthusiasts
+                </p>
+                <div style="margin-top: 15px; display: flex; justify-content: center; gap: 20px;">
+                    <button class="btn btn-secondary btn-sm" id="export-btn">
+                        <i class="fas fa-download"></i> Export Data
+                    </button>
+                    <button class="btn btn-secondary btn-sm" id="import-btn">
+                        <i class="fas fa-upload"></i> Import Data
+                    </button>
+                    <button class="btn btn-danger btn-sm" id="clear-btn">
+                        <i class="fas fa-trash"></i> Clear All
+                    </button>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // ==================== DATABASE CLASS ====================
+        class MovieDatabase {
+            constructor() {
+                this.initializeDatabase();
+            }
+            
+            initializeDatabase() {
+                // Check if database exists in localStorage
+                if (!localStorage.getItem('movie_database')) {
+                    this.createDatabase();
+                } else {
+                    this.loadDatabase();
+                }
+            }
+            
+            createDatabase() {
+                this.db = {
+                    version: '1.0',
+                    created: new Date().toISOString(),
+                    users: [],
+                    movies: [],
+                    userMovies: [],
+                    comments: [],
+                    currentUser: null
+                };
+                
+                // Add sample data
+                this.addSampleData();
+                this.saveDatabase();
+            }
+            
+            loadDatabase() {
+                this.db = JSON.parse(localStorage.getItem('movie_database'));
+            }
+            
+            saveDatabase() {
+                localStorage.setItem('movie_database', JSON.stringify(this.db));
+            }
+            
+            addSampleData() {
+                // Sample users
+                this.db.users = [
+                    { id: this.generateId(), name: "Alex Johnson", email: "alex@example.com", bio: "Movie enthusiast since 2010", avatarColor: "#3498db" },
+                    { id: this.generateId(), name: "Maria Garcia", email: "maria@example.com", bio: "Horror movie fanatic", avatarColor: "#e74c3c" },
+                    { id: this.generateId(), name: "Sam Wilson", email: "sam@example.com", bio: "Documentary lover", avatarColor: "#2ecc71" },
+                    { id: this.generateId(), name: "Taylor Smith", email: "taylor@example.com", bio: "Classic cinema admirer", avatarColor: "#f39c12" }
+                ];
+                
+                // Sample movies
+                this.db.movies = [
+                    { 
+                        id: this.generateId(), 
+                        title: "Inception", 
+                        release_year: 2010, 
+                        poster: "https://m.media-amazon.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5OTM0Mw@@._V1_FMjpg_UX1000_.jpg", 
+                        director: "Christopher Nolan", 
+                        rating: 8.8,
+                        description: "A thief who steals corporate secrets through dream-sharing technology is given the inverse task of planting an idea into the mind of a C.E.O."
+                    },
+                    { 
+                        id: this.generateId(), 
+                        title: "The Shawshank Redemption", 
+                        release_year: 1994, 
+                        poster: "https://m.media-amazon.com/images/M/MV5BNDE3ODcxYzMtY2YzZC00NmNlLWJiNDMtZDViZWM2MzIxZDYwXkEyXkFqcGdeQXVyNjAwNDUxODI@._V1_.jpg", 
+                        director: "Frank Darabont", 
+                        rating: 9.3,
+                        description: "Two imprisoned men bond over a number of years, finding solace and eventual redemption through acts of common decency."
+                    },
+                    { 
+                        id: this.generateId(), 
+                        title: "The Dark Knight", 
+                        release_year: 2008, 
+                        poster: "https://m.media-amazon.com/images/M/MV5BMTMxNTMwODM0NF5BMl5BanBnXkFtZTcwODAyMTk2Mw@@._V1_.jpg", 
+                        director: "Christopher Nolan", 
+                        rating: 9.0,
+                        description: "When the menace known as the Joker wreaks havoc and chaos on the people of Gotham, Batman must accept one of the greatest psychological and physical tests of his ability to fight injustice."
+                    },
+                    { 
+                        id: this.generateId(), 
+                        title: "Pulp Fiction", 
+                        release_year: 1994, 
+                        poster: "https://m.media-amazon.com/images/M/MV5BNGNhMDIzZTUtNTBlZi00MTRlLWFjM2ItYzViMjE3YzI5MjljXkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_.jpg", 
+                        director: "Quentin Tarantino", 
+                        rating: 8.9,
+                        description: "The lives of two mob hitmen, a boxer, a gangster and his wife intertwine in four tales of violence and redemption."
+                    },
+                    { 
+                        id: this.generateId(), 
+                        title: "Parasite", 
+                        release_year: 2019, 
+                        poster: "https://m.media-amazon.com/images/M/MV5BYWZjMjk3ZTItODQ2ZC00NTY5LWE0ZDYtZTI3MjcwN2Q5NTVkXkEyXkFqcGdeQXVyODk4OTc3MTY@._V1_.jpg", 
+                        director: "Bong Joon Ho", 
+                        rating: 8.6,
+                        description: "Greed and class discrimination threaten the newly formed symbiotic relationship between the wealthy Park family and the destitute Kim clan."
+                    }
+                ];
+                
+                // Sample user-movie relationships
+                this.db.userMovies = [
+                    { id: this.generateId(), user_id: this.db.users[0].id, movie_id: this.db.movies[0].id },
+                    { id: this.generateId(), user_id: this.db.users[0].id, movie_id: this.db.movies[1].id },
+                    { id: this.generateId(), user_id: this.db.users[0].id, movie_id: this.db.movies[3].id },
+                    { id: this.generateId(), user_id: this.db.users[1].id, movie_id: this.db.movies[1].id },
+                    { id: this.generateId(), user_id: this.db.users[1].id, movie_id: this.db.movies[2].id },
+                    { id: this.generateId(), user_id: this.db.users[1].id, movie_id: this.db.movies[4].id },
+                    { id: this.generateId(), user_id: this.db.users[2].id, movie_id: this.db.movies[0].id },
+                    { id: this.generateId(), user_id: this.db.users[2].id, movie_id: this.db.movies[2].id },
+                    { id: this.generateId(), user_id: this.db.users[2].id, movie_id: this.db.movies[3].id },
+                    { id: this.generateId(), user_id: this.db.users[2].id, movie_id: this.db.movies[4].id },
+                    { id: this.generateId(), user_id: this.db.users[3].id, movie_id: this.db.movies[2].id }
+                ];
+                
+                // Sample comments
+                this.db.comments = [
+                    { 
+                        id: this.generateId(), 
+                        movie_id: this.db.movies[0].id, 
+                        user_id: this.db.users[0].id, 
+                        text: "Mind-blowing concept and execution! Nolan at his best.", 
+                        rating: 5, 
+                        created_at: new Date('2024-01-15').toISOString() 
+                    },
+                    { 
+                        id: this.generateId(), 
+                        movie_id: this.db.movies[0].id, 
+                        user_id: this.db.users[1].id, 
+                        text: "The visuals were stunning, but the plot got confusing at times.", 
+                        rating: 4, 
+                        created_at: new Date('2024-02-20').toISOString() 
+                    },
+                    { 
+                        id: this.generateId(), 
+                        movie_id: this.db.movies[1].id, 
+                        user_id: this.db.users[2].id, 
+                        text: "The most perfect movie ever made. Tim Robbins and Morgan Freeman are incredible.", 
+                        rating: 5, 
+                        created_at: new Date('2024-03-10').toISOString() 
+                    }
+                ];
+            }
+            
+            generateId() {
+                return Date.now().toString(36) + Math.random().toString(36).substr(2);
+            }
+            
+            // ==================== USER METHODS ====================
+            getUsers() {
+                return this.db.users;
+            }
+            
+            addUser(userData) {
+                const user = {
+                    id: this.generateId(),
+                    name: userData.name,
+                    email: userData.email || '',
+                    bio: userData.bio || '',
+                    avatarColor: this.getRandomColor(),
+                    created_at: new Date().toISOString()
+                };
+                
+                this.db.users.push(user);
+                this.saveDatabase();
+                return user;
+            }
+            
+            deleteUser(userId) {
+                this.db.users = this.db.users.filter(u => u.id !== userId);
+                this.db.userMovies = this.db.userMovies.filter(um => um.user_id !== userId);
+                this.saveDatabase();
+                return true;
+            }
+            
+            // ==================== MOVIE METHODS ====================
+            getMovies() {
+                return this.db.movies;
+            }
+            
+            addMovie(movieData) {
+                const movie = {
+                    id: this.generateId(),
+                    title: movieData.title,
+                    release_year: movieData.release_year || null,
+                    poster: movieData.poster || '',
+                    director: movieData.director || '',
+                    rating: movieData.rating,
+                    description: movieData.description || '',
+                    created_at: new Date().toISOString()
+                };
+                
+                this.db.movies.push(movie);
+                this.saveDatabase();
+                return movie;
+            }
+            
+            deleteMovie(movieId) {
+                this.db.movies = this.db.movies.filter(m => m.id !== movieId);
+                this.db.userMovies = this.db.userMovies.filter(um => um.movie_id !== movieId);
+                this.db.comments = this.db.comments.filter(c => c.movie_id !== movieId);
+                this.saveDatabase();
+                return true;
+            }
+            
+            // ==================== USER-MOVIE RELATIONSHIPS ====================
+            getUserMovies(userId) {
+                const userMovieIds = this.db.userMovies
+                    .filter(um => um.user_id === userId)
+                    .map(um => um.movie_id);
+                
+                return this.db.movies.filter(movie => 
+                    userMovieIds.includes(movie.id)
+                ).map(movie => ({
+                    ...movie,
+                    user_movie_id: this.db.userMovies.find(um => 
+                        um.user_id === userId && um.movie_id === movie.id
+                    )?.id
+                }));
+            }
+            
+            addMovieToUser(userId, movieId) {
+                // Check if relationship already exists
+                const existing = this.db.userMovies.find(
+                    um => um.user_id === userId && um.movie_id === movieId
+                );
+                
+                if (existing) {
+                    return { success: false, message: "Movie already in collection" };
+                }
+                
+                const userMovie = {
+                    id: this.generateId(),
+                    user_id: userId,
+                    movie_id: movieId,
+                    added_at: new Date().toISOString()
+                };
+                
+                this.db.userMovies.push(userMovie);
+                this.saveDatabase();
+                return { success: true, data: userMovie };
+            }
+            
+            removeMovieFromUser(userMovieId) {
+                this.db.userMovies = this.db.userMovies.filter(um => um.id !== userMovieId);
+                this.saveDatabase();
+                return true;
+            }
+            
+            // ==================== COMMENT METHODS ====================
+            getComments(movieId) {
+                return this.db.comments
+                    .filter(c => c.movie_id === movieId)
+                    .sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+            }
+            
+            addComment(commentData) {
+                const comment = {
+                    id: this.generateId(),
+                    movie_id: commentData.movie_id,
+                    user_id: this.db.currentUser?.id || 'anonymous',
+                    text: commentData.text,
+                    rating: commentData.rating || 0,
+                    created_at: new Date().toISOString()
+                };
+                
+                this.db.comments.push(comment);
+                this.saveDatabase();
+                return comment;
+            }
+            
+            deleteComment(commentId) {
+                this.db.comments = this.db.comments.filter(c => c.id !== commentId);
+                this.saveDatabase();
+                return true;
+            }
+            
+            // ==================== AUTHENTICATION ====================
+            register(userData) {
+                // Check if user already exists
+                const existingUser = this.db.users.find(u => u.email === userData.email);
+                if (existingUser) {
+                    return { success: false, message: "User already exists" };
+                }
+                
+                const user = {
+                    id: this.generateId(),
+                    name: userData.name,
+                    email: userData.email,
+                    password: userData.password, // In real app, hash this!
+                    avatarColor: this.getRandomColor(),
+                    is_registered: true,
+                    created_at: new Date().toISOString()
+                };
+                
+                this.db.users.push(user);
+                this.db.currentUser = user;
+                this.saveDatabase();
+                return { success: true, user: user };
+            }
+            
+            login(email, password) {
+                const user = this.db.users.find(u => u.email === email && u.password === password);
+                
+                if (user) {
+                    this.db.currentUser = user;
+                    this.saveDatabase();
+                    return { success: true, user: user };
+                }
+                
+                return { success: false, message: "Invalid credentials" };
+            }
+            
+            logout() {
+                this.db.currentUser = null;
+                this.saveDatabase();
+                return true;
+            }
+            
+            getCurrentUser() {
+                return this.db.currentUser;
+            }
+            
+            // ==================== UTILITY METHODS ====================
+            getStats() {
+                const totalUsers = this.db.users.length;
+                const totalMovies = this.db.movies.length;
+                const totalCollections = this.db.userMovies.length;
+                
+                let avgRating = 0;
+                if (totalMovies > 0) {
+                    const sumRating = this.db.movies.reduce((sum, movie) => sum + movie.rating, 0);
+                    avgRating = sumRating / totalMovies;
+                }
+                
+                return {
+                    total_users: totalUsers,
+                    total_movies: totalMovies,
+                    total_collections: totalCollections,
+                    average_rating: parseFloat(avgRating.toFixed(1))
+                };
+            }
+            
+            searchUsers(query) {
+                if (!query) return this.db.users;
+                return this.db.users.filter(user => 
+                    user.name.toLowerCase().includes(query.toLowerCase()) ||
+                    user.email.toLowerCase().includes(query.toLowerCase())
+                );
+            }
+            
+            searchMovies(query) {
+                if (!query) return this.db.movies;
+                return this.db.movies.filter(movie => 
+                    movie.title.toLowerCase().includes(query.toLowerCase()) ||
+                    (movie.director && movie.director.toLowerCase().includes(query.toLowerCase())) ||
+                    (movie.description && movie.description.toLowerCase().includes(query.toLowerCase()))
+                );
+            }
+            
+            getRandomColor() {
+                const colors = ['#3498db', '#e74c3c', '#2ecc71', '#f39c12', '#9b59b6', '#1abc9c'];
+                return colors[Math.floor(Math.random() * colors.length)];
+            }
+            
+            // ==================== DATA MANAGEMENT ====================
+            exportData() {
+                const data = {
+                    users: this.db.users,
+                    movies: this.db.movies,
+                    user_movies: this.db.userMovies,
+                    comments: this.db.comments
+                };
+                return JSON.stringify(data, null, 2);
+            }
+            
+            importData(jsonData) {
+                try {
+                    const data = JSON.parse(jsonData);
+                    
+                    if (data.users) this.db.users = data.users;
+                    if (data.movies) this.db.movies = data.movies;
+                    if (data.user_movies) this.db.userMovies = data.user_movies;
+                    if (data.comments) this.db.comments = data.comments;
+                    
+                    this.saveDatabase();
+                    return { success: true, message: "Data imported successfully!" };
+                } catch (error) {
+                    return { success: false, message: "Invalid JSON data" };
+                }
+            }
+            
+            clearAllData() {
+                this.createDatabase();
+                return { success: true, message: "All data cleared!" };
+            }
+        }
+
+        // ==================== APPLICATION INSTANCE ====================
+        const db = new MovieDatabase();
+        
+        // ==================== STATE MANAGEMENT ====================
+        let currentState = {
+            userId: null,
+            viewingAllMovies: false,
+            currentUserMovies: [],
+            selectedMovieId: null,
+            userRating: 0
+        };
+
+        // ==================== DOM ELEMENTS ====================
+        const authContainer = document.getElementById('auth-container');
+        const appContainer = document.getElementById('app-container');
+        const loginScreen = document.getElementById('login-screen');
+        const signupScreen = document.getElementById('signup-screen');
+        const loginForm = document.getElementById('login-form');
+        const signupForm = document.getElementById('signup-form');
+        const showSignupLink = document.getElementById('show-signup');
+        const showLoginLink = document.getElementById('show-login');
+        const logoutBtn = document.getElementById('logout-btn');
+        
+        const usersList = document.getElementById('users-list');
+        const moviesContainer = document.getElementById('movies-container');
+        const selectedUserName = document.getElementById('selected-user-name');
+        const addUserBtn = document.getElementById('add-user-btn');
+        const addMovieBtn = document.getElementById('add-movie-btn');
+        const viewAllMoviesBtn = document.getElementById('view-all-movies-btn');
+        const addUserModal = document.getElementById('add-user-modal');
+        const addMovieModal = document.getElementById('add-movie-modal');
+        const addCommentModal = document.getElementById('add-comment-modal');
+        const addCommentBtn = document.getElementById('add-comment-btn');
+        const closeModals = document.querySelectorAll('.close-modal');
+        const addUserForm = document.getElementById('add-user-form');
+        const addMovieForm = document.getElementById('add-movie-form');
+        const addCommentForm = document.getElementById('add-comment-form');
+        const totalUsersEl = document.getElementById('total-users');
+        const totalMoviesEl = document.getElementById('total-movies');
+        const avgRatingEl = document.getElementById('avg-rating');
+        const collectionSizeEl = document.getElementById('collection-size');
+        const userSearchInput = document.getElementById('user-search');
+        const movieSearchInput = document.getElementById('movie-search');
+        const userAvatar = document.getElementById('user-avatar');
+        const userGreetingText = document.getElementById('user-greeting-text');
+        const userEmail = document.getElementById('user-email');
+        const commentsSection = document.getElementById('comments-section');
+        const commentsList = document.getElementById('comments-list');
+        const commentText = document.getElementById('comment-text');
+        const ratingValue = document.getElementById('rating-value');
+        const starRatings = document.querySelectorAll('.star-rating i');
+        const exportBtn = document.getElementById('export-btn');
+        const importBtn = document.getElementById('import-btn');
+        const clearBtn = document.getElementById('clear-btn');
+
+        // ==================== ANIMATION UTILITIES ====================
+        class Animations {
+            static async fadeOut(element, duration = 300) {
+                return new Promise(resolve => {
+                    element.style.transition = `opacity ${duration}ms ease`;
+                    element.style.opacity = '0';
+                    setTimeout(() => {
+                        element.style.display = 'none';
+                        element.style.opacity = '1';
+                        resolve();
+                    }, duration);
+                });
+            }
+            
+            static async fadeIn(element, duration = 300) {
+                return new Promise(resolve => {
+                    element.style.opacity = '0';
+                    element.style.display = 'block';
+                    setTimeout(() => {
+                        element.style.transition = `opacity ${duration}ms ease`;
+                        element.style.opacity = '1';
+                        setTimeout(() => resolve(), duration);
+                    }, 10);
+                });
+            }
+            
+            static async slide(element, direction = 'up', duration = 300) {
+                return new Promise(resolve => {
+                    const transform = direction === 'up' ? 'translateY(20px)' : 'translateY(-20px)';
+                    element.style.transform = transform;
+                    element.style.opacity = '0';
+                    element.style.display = 'block';
+                    
+                    setTimeout(() => {
+                        element.style.transition = `transform ${duration}ms ease, opacity ${duration}ms ease`;
+                        element.style.transform = 'translateY(0)';
+                        element.style.opacity = '1';
+                        setTimeout(() => resolve(), duration);
+                    }, 10);
+                });
+            }
+            
+            static rippleEffect(event) {
+                const button = event.currentTarget;
+                const circle = document.createElement('span');
+                const diameter = Math.max(button.clientWidth, button.clientHeight);
+                const radius = diameter / 2;
+                
+                circle.style.width = circle.style.height = `${diameter}px`;
+                circle.style.left = `${event.clientX - button.getBoundingClientRect().left - radius}px`;
+                circle.style.top = `${event.clientY - button.getBoundingClientRect().top - radius}px`;
+                circle.classList.add('ripple-effect');
+                
+                const ripple = button.getElementsByClassName('ripple-effect')[0];
+                if (ripple) ripple.remove();
+                
+                button.appendChild(circle);
+                
+                setTimeout(() => circle.remove(), 600);
+            }
+            
+            static shake(element) {
+                element.style.animation = 'none';
+                setTimeout(() => {
+                    element.style.animation = 'shake 0.5s ease';
+                }, 10);
+            }
+        }
+
+        // ==================== NOTIFICATION SYSTEM ====================
+        class NotificationSystem {
+            static show(message, type = 'info', duration = 3000) {
+                // Remove existing notifications
+                document.querySelectorAll('.notification').forEach(n => n.remove());
+                
+                // Create notification
+                const notification = document.createElement('div');
+                notification.className = `notification notification-${type}`;
+                notification.innerHTML = `
+                    <i class="fas fa-${this.getIcon(type)}"></i>
+                    <span>${message}</span>
+                `;
+                
+                document.body.appendChild(notification);
+                
+                // Auto remove after duration
+                setTimeout(() => {
+                    notification.style.animation = 'fadeOut 0.5s ease';
+                    setTimeout(() => notification.remove(), 500);
+                }, duration);
+                
+                // Click to dismiss
+                notification.addEventListener('click', () => notification.remove());
+            }
+            
+            static getIcon(type) {
+                const icons = {
+                    success: 'check-circle',
+                    error: 'exclamation-circle',
+                    warning: 'exclamation-triangle',
+                    info: 'info-circle'
+                };
+                return icons[type] || 'info-circle';
+            }
+        }
+
+        // ==================== AUTHENTICATION ====================
+        async function initializeAuth() {
+            const currentUser = db.getCurrentUser();
+            
+            if (currentUser) {
+                // User is logged in
+                await switchToApp(currentUser);
+            } else {
+                // Show login screen
+                await Animations.fadeIn(authContainer);
+            }
+            
+            setupAuthEvents();
+        }
+
+        function setupAuthEvents() {
+            // Login form submission
+            loginForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                
+                const email = document.getElementById('login-email').value;
+                const password = document.getElementById('login-password').value;
+                
+                if (!email || !password) {
+                    NotificationSystem.show('Please fill in all fields', 'error');
+                    return;
+                }
+                
+                // Show loading state
+                const submitBtn = loginForm.querySelector('button');
+                const originalText = submitBtn.innerHTML;
+                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Signing In...';
+                submitBtn.disabled = true;
+                
+                // Simulate API call delay
+                await new Promise(resolve => setTimeout(resolve, 800));
+                
+                const result = db.login(email, password);
+                
+                if (result.success) {
+                    NotificationSystem.show('Login successful!', 'success');
+                    await switchToApp(result.user);
+                } else {
+                    NotificationSystem.show(result.message, 'error');
+                    Animations.shake(loginForm);
+                }
+                
+                // Reset button
+                submitBtn.innerHTML = originalText;
+                submitBtn.disabled = false;
+            });
+            
+            // Signup form submission
+            signupForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                
+                const name = document.getElementById('signup-name').value;
+                const email = document.getElementById('signup-email').value;
+                const password = document.getElementById('signup-password').value;
+                const confirmPassword = document.getElementById('signup-confirm-password').value;
+                
+                if (!name || !email || !password || !confirmPassword) {
+                    NotificationSystem.show('Please fill in all fields', 'error');
+                    return;
+                }
+                
+                if (password !== confirmPassword) {
+                    NotificationSystem.show('Passwords do not match', 'error');
+                    Animations.shake(document.getElementById('signup-confirm-password'));
+                    return;
+                }
+                
+                if (password.length < 6) {
+                    NotificationSystem.show('Password must be at least 6 characters', 'error');
+                    return;
+                }
+                
+                // Show loading state
+                const submitBtn = signupForm.querySelector('button');
+                const originalText = submitBtn.innerHTML;
+                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Creating Account...';
+                submitBtn.disabled = true;
+                
+                // Simulate API call delay
+                await new Promise(resolve => setTimeout(resolve, 1000));
+                
+                const result = db.register({ name, email, password });
+                
+                if (result.success) {
+                    NotificationSystem.show('Account created successfully!', 'success');
+                    await switchToApp(result.user);
+                } else {
+                    NotificationSystem.show(result.message, 'error');
+                }
+                
+                // Reset button
+                submitBtn.innerHTML = originalText;
+                submitBtn.disabled = false;
+            });
+            
+            // Toggle between login/signup
+            showSignupLink.addEventListener('click', async (e) => {
+                e.preventDefault();
+                await Animations.slide(loginScreen, 'up');
+                loginScreen.style.display = 'none';
+                await Animations.slide(signupScreen, 'down');
+            });
+            
+            showLoginLink.addEventListener('click', async (e) => {
+                e.preventDefault();
+                await Animations.slide(signupScreen, 'up');
+                signupScreen.style.display = 'none';
+                await Animations.slide(loginScreen, 'down');
+            });
+            
+            // Logout
+            logoutBtn.addEventListener('click', async () => {
+                db.logout();
+                await switchToAuth();
+            });
+        }
+
+        async function switchToApp(user) {
+            // Update user info
+            userAvatar.textContent = user.name.charAt(0).toUpperCase();
+            userAvatar.style.background = `linear-gradient(45deg, ${user.avatarColor || db.getRandomColor()}, #fff)`;
+            userGreetingText.textContent = `Welcome back, ${user.name.split(' ')[0]}!`;
+            userEmail.textContent = user.email;
+            
+            // Switch to app
+            await Animations.fadeOut(authContainer);
+            appContainer.classList.add('active');
+            await Animations.fadeIn(appContainer);
+            
+            // Initialize app
+            initApp();
+        }
+
+        async function switchToAuth() {
+            // Switch to auth
+            await Animations.fadeOut(appContainer);
+            appContainer.classList.remove('active');
+            await Animations.fadeIn(authContainer);
+            
+            // Reset forms
+            loginForm.reset();
+            signupForm.reset();
+            loginScreen.style.display = 'block';
+            signupScreen.style.display = 'none';
+        }
+
+        // ==================== MAIN APP INITIALIZATION ====================
+        async function initApp() {
+            setupEventListeners();
+            renderUsers();
+            updateStats();
+            
+            // Check if there are users
+            const users = db.getUsers();
+            if (users.length > 0) {
+                // Select first user by default
+                const firstUser = users[0];
+                await selectUser(firstUser.id, firstUser.name);
+            }
+        }
+
+        function setupEventListeners() {
+            // Event listeners
+            addUserBtn.addEventListener('click', () => openModal(addUserModal));
+            addMovieBtn.addEventListener('click', () => openModal(addMovieModal));
+            addCommentBtn.addEventListener('click', () => openModal(addCommentModal));
+            
+            viewAllMoviesBtn.addEventListener('click', async () => {
+                currentState.viewingAllMovies = true;
+                selectedUserName.textContent = "All Movies";
+                await renderMovies(db.getMovies());
+                commentsSection.style.display = 'none';
+            });
+            
+            // Close modals
+            closeModals.forEach(closeBtn => {
+                closeBtn.addEventListener('click', function() {
+                    const modal = this.closest('.modal');
+                    Animations.fadeOut(modal);
+                });
+            });
+            
+            // Close modals when clicking outside
+            window.addEventListener('click', function(event) {
+                if (event.target.classList.contains('modal')) {
+                    Animations.fadeOut(event.target);
+                }
+            });
+            
+            // Form submissions
+            addUserForm.addEventListener('submit', handleAddUser);
+            addMovieForm.addEventListener('submit', handleAddMovie);
+            addCommentForm.addEventListener('submit', handleAddComment);
+            
+            // Search functionality
+            userSearchInput.addEventListener('input', handleUserSearch);
+            movieSearchInput.addEventListener('input', handleMovieSearch);
+            
+            // Star rating
+            starRatings.forEach(star => {
+                star.addEventListener('click', (e) => {
+                    const rating = parseInt(e.target.dataset.rating);
+                    currentState.userRating = rating;
+                    
+                    // Update star display
+                    starRatings.forEach((s, index) => {
+                        if (index < rating) {
+                            s.classList.remove('far');
+                            s.classList.add('fas');
+                        } else {
+                            s.classList.remove('fas');
+                            s.classList.add('far');
+                        }
+                    });
+                    
+                    // Update rating text
+                    ratingValue.textContent = `${rating}/5`;
+                });
+            });
+            
+            // Data management
+            exportBtn.addEventListener('click', exportData);
+            importBtn.addEventListener('click', importData);
+            clearBtn.addEventListener('click', clearAllData);
+            
+            // Ripple effects
+            document.querySelectorAll('.ripple').forEach(button => {
+                button.addEventListener('click', Animations.rippleEffect);
+            });
+        }
+
+        // ==================== USER MANAGEMENT ====================
+        function renderUsers(usersToShow = null) {
+            const users = usersToShow || db.getUsers();
+            usersList.innerHTML = '';
+            
+            if (users.length === 0) {
+                usersList.innerHTML = '<div class="no-movies">No users found</div>';
+                return;
+            }
+            
+            users.forEach((user, index) => {
+                setTimeout(() => {
+                    const userMovieCount = db.getUserMovies(user.id).length;
+                    
+                    const userItem = document.createElement('div');
+                    userItem.className = `user-item ${currentState.userId === user.id ? 'active' : ''}`;
+                    userItem.style.animationDelay = `${index * 0.1}s`;
+                    userItem.innerHTML = `
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <div class="user-avatar" style="background: ${user.avatarColor}; width: 30px; height: 30px; font-size: 0.9rem;">
+                                ${user.name.charAt(0).toUpperCase()}
+                            </div>
+                            <div>
+                                <div class="user-name">${user.name}</div>
+                                <div style="font-size: 0.85rem; color: #666;">${user.email || 'No email'}</div>
+                            </div>
+                        </div>
+                        <div class="user-movie-count">${userMovieCount} movies</div>
+                    `;
+                    
+                    userItem.addEventListener('click', () => selectUser(user.id, user.name));
+                    
+                    // Add delete button for non-registered users
+                    if (!user.is_registered) {
+                        const deleteBtn = document.createElement('button');
+                        deleteBtn.innerHTML = '<i class="fas fa-times"></i>';
+                        deleteBtn.style.cssText = 'background: none; border: none; color: #999; cursor: pointer; padding: 5px;';
+                        deleteBtn.addEventListener('click', (e) => {
+                            e.stopPropagation();
+                            deleteUser(user.id);
+                        });
+                        userItem.appendChild(deleteBtn);
+                    }
+                    
+                    usersList.appendChild(userItem);
+                }, index * 100);
+            });
+        }
+
+        async function selectUser(userId, userName) {
+            currentState.userId = userId;
+            currentState.viewingAllMovies = false;
+            
+            selectedUserName.textContent = userName;
+            
+            // Highlight selected user
+            document.querySelectorAll('.user-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            
+            // Find and highlight the clicked user
+            const userItems = document.querySelectorAll('.user-item');
+            userItems.forEach(item => {
+                if (item.querySelector('.user-name').textContent === userName) {
+                    item.classList.add('active');
+                }
+            });
+            
+            // Clear movie search
+            movieSearchInput.value = '';
+            
+            // Show loading animation
+            moviesContainer.innerHTML = `
+                <div class="loading">
+                    <i class="fas fa-spinner fa-spin"></i>
+                    <p>Loading collection...</p>
+                </div>
+            `;
+            
+            // Get movies for this user
+            await new Promise(resolve => setTimeout(resolve, 500)); // Simulate loading
+            currentState.currentUserMovies = db.getUserMovies(userId);
+            await renderMovies(currentState.currentUserMovies);
+            
+            // Hide comments section
+            commentsSection.style.display = 'none';
+        }
+
+        async function handleAddUser(event) {
+            event.preventDefault();
+            
+            const userName = document.getElementById('user-name').value.trim();
+            const userEmail = document.getElementById('user-email').value.trim();
+            const userBio = document.getElementById('user-bio').value.trim();
+            
+            if (!userName) {
+                NotificationSystem.show('Please enter a user name', 'error');
+                Animations.shake(document.getElementById('user-name'));
+                return;
+            }
+            
+            const userData = {
+                name: userName,
+                email: userEmail,
+                bio: userBio
+            };
+            
+            const user = db.addUser(userData);
+            
+            // Close modal with animation
+            await Animations.fadeOut(addUserModal);
+            
+            // Reset form
+            addUserForm.reset();
+            
+            // Update UI with animation
+            await renderUsers();
+            updateStats();
+            
+            // Select the new user
+            await selectUser(user.id, user.name);
+            
+            NotificationSystem.show(`User "${userName}" added successfully!`, 'success');
+        }
+
+        function deleteUser(userId) {
+            const user = db.getUsers().find(u => u.id === userId);
+            
+            if (!confirm(`Are you sure you want to delete user "${user.name}"? This will also remove all their movie associations.`)) {
+                return;
+            }
+            
+            const success = db.deleteUser(userId);
+            
+            if (success) {
+                // Update UI
+                renderUsers();
+                updateStats();
+                
+                // Clear movie view if deleted user was selected
+                if (currentState.userId === userId) {
+                    currentState.userId = null;
+                    selectedUserName.textContent = "Select a User";
+                    moviesContainer.innerHTML = `
+                        <div class="loading">
+                            <i class="fas fa-film"></i>
+                            <p>Select a user or view all movies</p>
+                        </div>
+                    `;
+                }
+                
+                NotificationSystem.show(`User "${user.name}" deleted successfully!`, 'success');
+            }
+        }
+
+        // ==================== MOVIE MANAGEMENT ====================
+        async function renderMovies(moviesToRender) {
+            moviesContainer.innerHTML = '';
+            
+            if (!moviesToRender || moviesToRender.length === 0) {
+                const noMovies = document.createElement('div');
+                noMovies.className = 'no-movies';
+                noMovies.innerHTML = `
+                    <i class="fas fa-film"></i>
+                    <h3>No movies found</h3>
+                    <p>${currentState.viewingAllMovies ? 'Add some movies to the collection' : 'Add movies to this user\'s collection'}</p>
+                `;
+                moviesContainer.appendChild(noMovies);
+                return;
+            }
+            
+            moviesToRender.forEach((movie, index) => {
+                setTimeout(() => {
+                    const movieCard = document.createElement('div');
+                    movieCard.className = 'movie-card';
+                    movieCard.style.animationDelay = `${index * 0.1}s`;
+                    
+                    const posterUrl = movie.poster || 'https://via.placeholder.com/300x450/2c3e50/ecf0f1?text=Movie+Poster';
+                    const description = movie.description || 'No description available';
+                    
+                    movieCard.innerHTML = `
+                        <div class="movie-poster" style="background-image: url('${posterUrl}')">
+                            <div class="movie-rating">
+                                <i class="fas fa-star"></i> ${movie.rating}
+                            </div>
+                        </div>
+                        <div class="movie-info">
+                            <div class="movie-title">${movie.title}</div>
+                            <div class="movie-details">
+                                <div><strong>Year:</strong> ${movie.release_year || 'N/A'}</div>
+                                <div><strong>Director:</strong> ${movie.director || 'Unknown'}</div>
+                                <div style="margin-top: 10px; font-size: 0.9rem; color: #777; line-height: 1.4;">
+                                    ${description.length > 100 ? description.substring(0, 100) + '...' : description}
+                                </div>
+                            </div>
+                            <div class="movie-actions">
+                                ${currentState.viewingAllMovies ? 
+                                    `<button class="btn btn-secondary add-to-collection-btn" data-movie-id="${movie.id}">
+                                        <i class="fas fa-plus"></i> Add to Collection
+                                    </button>` : 
+                                    `<button class="btn btn-danger remove-from-collection-btn" data-user-movie-id="${movie.user_movie_id || movie.id}">
+                                        <i class="fas fa-trash"></i> Remove
+                                    </button>`
+                                }
+                                ${currentState.viewingAllMovies ? 
+                                    `<button class="btn btn-danger delete-movie-btn" data-movie-id="${movie.id}" style="padding: 10px;">
+                                        <i class="fas fa-times"></i>
+                                    </button>` : 
+                                    `<button class="btn btn-secondary view-comments-btn" data-movie-id="${movie.id}" style="padding: 10px;">
+                                        <i class="fas fa-comments"></i>
+                                    </button>`
+                                }
+                            </div>
+                        </div>
+                    `;
+                    
+                    moviesContainer.appendChild(movieCard);
+                }, index * 100);
+            });
+            
+            // Add event listeners after a short delay to ensure DOM is ready
+            setTimeout(() => {
+                // Add to collection buttons
+                document.querySelectorAll('.add-to-collection-btn').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const movieId = this.getAttribute('data-movie-id');
+                        addMovieToUserCollection(movieId);
+                    });
+                });
+                
+                // Remove from collection buttons
+                document.querySelectorAll('.remove-from-collection-btn').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const userMovieId = this.getAttribute('data-user-movie-id');
+                        removeMovieFromUserCollection(userMovieId);
+                    });
+                });
+                
+                // Delete movie buttons
+                document.querySelectorAll('.delete-movie-btn').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const movieId = this.getAttribute('data-movie-id');
+                        deleteMovie(movieId);
+                    });
+                });
+                
+                // View comments buttons
+                document.querySelectorAll('.view-comments-btn').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const movieId = this.getAttribute('data-movie-id');
+                        viewComments(movieId);
+                    });
+                });
+            }, moviesToRender.length * 100 + 100);
+        }
+
+        async function addMovieToUserCollection(movieId) {
+            if (!currentState.userId) {
+                NotificationSystem.show("Please select a user first!", "error");
+                return;
+            }
+            
+            const result = db.addMovieToUser(currentState.userId, movieId);
+            
+            if (result.success) {
+                // Refresh user's movies
+                currentState.currentUserMovies = db.getUserMovies(currentState.userId);
+                await renderMovies(currentState.currentUserMovies);
+                
+                // Update stats
+                updateStats();
+                
+                // Show success message
+                const movie = db.getMovies().find(m => m.id === movieId);
+                NotificationSystem.show(`"${movie.title}" added to collection!`, "success");
+            } else {
+                NotificationSystem.show(result.message, "error");
+            }
+        }
+
+        async function removeMovieFromUserCollection(userMovieId) {
+            const success = db.removeMovieFromUser(userMovieId);
+            
+            if (success) {
+                // Refresh user's movies
+                currentState.currentUserMovies = db.getUserMovies(currentState.userId);
+                await renderMovies(currentState.currentUserMovies);
+                
+                // Update stats
+                updateStats();
+                
+                NotificationSystem.show("Movie removed from collection!", "success");
+            } else {
+                NotificationSystem.show("Failed to remove movie from collection", "error");
+            }
+        }
+
+        async function handleAddMovie(event) {
+            event.preventDefault();
+            
+            const title = document.getElementById('movie-title').value.trim();
+            const releaseYear = document.getElementById('release-year').value;
+            const director = document.getElementById('director').value.trim();
+            const rating = parseFloat(document.getElementById('rating').value);
+            const poster = document.getElementById('poster').value.trim();
+            const description = document.getElementById('movie-description').value.trim();
+            
+            if (!title) {
+                NotificationSystem.show("Please enter a movie title", "error");
+                Animations.shake(document.getElementById('movie-title'));
+                return;
+            }
+            
+            if (isNaN(rating) || rating < 0 || rating > 10) {
+                NotificationSystem.show("Rating must be between 0 and 10", "error");
+                Animations.shake(document.getElementById('rating'));
+                return;
+            }
+            
+            const movieData = {
+                title: title,
+                rating: rating,
+                release_year: releaseYear ? parseInt(releaseYear) : null,
+                director: director,
+                poster: poster,
+                description: description
+            };
+            
+            // Add movie
+            const movie = db.addMovie(movieData);
+            
+            // Close modal with animation
+            await Animations.fadeOut(addMovieModal);
+            
+            // Reset form
+            addMovieForm.reset();
+            
+            // Update stats
+            updateStats();
+            
+            // If viewing all movies, refresh the view
+            if (currentState.viewingAllMovies) {
+                await renderMovies(db.getMovies());
+            }
+            
+            NotificationSystem.show(`Movie "${title}" added successfully!`, "success");
+        }
+
+        function deleteMovie(movieId) {
+            const movie = db.getMovies().find(m => m.id === movieId);
+            
+            if (!confirm(`Are you sure you want to delete movie "${movie.title}"? This will remove it from all user collections.`)) {
+                return;
+            }
+            
+            const success = db.deleteMovie(movieId);
+            
+            if (success) {
+                // Update stats
+                updateStats();
+                
+                // Refresh current view
+                if (currentState.viewingAllMovies) {
+                    renderMovies(db.getMovies());
+                } else if (currentState.userId) {
+                    currentState.currentUserMovies = db.getUserMovies(currentState.userId);
+                    renderMovies(currentState.currentUserMovies);
+                }
+                
+                // Hide comments if viewing this movie's comments
+                if (currentState.selectedMovieId === movieId) {
+                    commentsSection.style.display = 'none';
+                }
+                
+                NotificationSystem.show(`Movie "${movie.title}" deleted successfully!`, "success");
+            }
+        }
+
+        // ==================== COMMENTS SYSTEM ====================
+        async function viewComments(movieId) {
+            currentState.selectedMovieId = movieId;
+            
+            // Show loading state
+            commentsList.innerHTML = `
+                <div class="loading" style="padding: 20px;">
+                    <i class="fas fa-spinner fa-spin"></i>
+                    <p>Loading comments...</p>
+                </div>
+            `;
+            
+            // Show comments section
+            commentsSection.style.display = 'block';
+            
+            // Load comments after a short delay
+            setTimeout(() => {
+                loadComments(movieId);
+            }, 500);
+        }
+
+        function loadComments(movieId) {
+            const comments = db.getComments(movieId);
+            const movie = db.getMovies().find(m => m.id === movieId);
+            
+            commentsList.innerHTML = '';
+            
+            if (comments.length === 0) {
+                commentsList.innerHTML = `
+                    <div class="no-movies" style="padding: 20px;">
+                        <i class="fas fa-comment-slash"></i>
+                        <h4>No comments yet</h4>
+                        <p>Be the first to share your thoughts!</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            comments.forEach((comment, index) => {
+                setTimeout(() => {
+                    const user = db.getUsers().find(u => u.id === comment.user_id) || { name: 'Anonymous', avatarColor: '#999' };
+                    const date = new Date(comment.created_at).toLocaleDateString();
+                    
+                    const commentItem = document.createElement('div');
+                    commentItem.className = 'comment-item';
+                    commentItem.style.animationDelay = `${index * 0.1}s`;
+                    commentItem.innerHTML = `
+                        <div class="comment-header">
+                            <div class="comment-author">
+                                <div class="user-avatar" style="width: 25px; height: 25px; font-size: 0.8rem; background: ${user.avatarColor}">
+                                    ${user.name.charAt(0).toUpperCase()}
+                                </div>
+                                ${user.name}
+                                ${comment.rating ? `<span style="color: var(--warning); margin-left: 10px;"><i class="fas fa-star"></i> ${comment.rating}/5</span>` : ''}
+                            </div>
+                            <div class="comment-date">${date}</div>
+                        </div>
+                        <div class="comment-text">${comment.text}</div>
+                    `;
+                    
+                    commentsList.appendChild(commentItem);
+                }, index * 100);
+            });
+        }
+
+        async function handleAddComment(event) {
+            event.preventDefault();
+            
+            const currentUser = db.getCurrentUser();
+            if (!currentUser) {
+                NotificationSystem.show('Please log in to comment', 'error');
+                await Animations.fadeOut(addCommentModal);
+                return;
+            }
+            
+            const text = commentText.value.trim();
+            
+            if (!text) {
+                NotificationSystem.show('Please enter a comment', 'error');
+                Animations.shake(commentText);
+                return;
+            }
+            
+            if (!currentState.selectedMovieId) {
+                NotificationSystem.show('No movie selected', 'error');
+                return;
+            }
+            
+            const commentData = {
+                movie_id: currentState.selectedMovieId,
+                text: text,
+                rating: currentState.userRating || 0
+            };
+            
+            // Add comment
+            db.addComment(commentData);
+            
+            // Close modal with animation
+            await Animations.fadeOut(addCommentModal);
+            
+            // Reset form
+            addCommentForm.reset();
+            currentState.userRating = 0;
+            starRatings.forEach(star => {
+                star.classList.remove('fas');
+                star.classList.add('far');
+            });
+            ratingValue.textContent = '';
+            
+            // Reload comments
+            loadComments(currentState.selectedMovieId);
+            
+            NotificationSystem.show('Comment posted successfully!', 'success');
+        }
+
+        // ==================== SEARCH FUNCTIONALITY ====================
+        function handleUserSearch() {
+            const query = userSearchInput.value;
+            const filteredUsers = db.searchUsers(query);
+            renderUsers(filteredUsers);
+        }
+
+        function handleMovieSearch() {
+            const query = movieSearchInput.value;
+            let filteredMovies;
+            
+            if (currentState.viewingAllMovies) {
+                filteredMovies = db.searchMovies(query);
+            } else if (currentState.userId) {
+                const userMovies = db.getUserMovies(currentState.userId);
+                filteredMovies = userMovies.filter(movie => 
+                    movie.title.toLowerCase().includes(query.toLowerCase()) ||
+                    (movie.director && movie.director.toLowerCase().includes(query.toLowerCase())) ||
+                    (movie.description && movie.description.toLowerCase().includes(query.toLowerCase()))
+                );
+            }
+            
+            if (filteredMovies) {
+                renderMovies(filteredMovies);
+            }
+        }
+
+        // ==================== STATISTICS ====================
+        function updateStats() {
+            const stats = db.getStats();
+            totalUsersEl.textContent = stats.total_users;
+            totalMoviesEl.textContent = stats.total_movies;
+            avgRatingEl.textContent = stats.average_rating;
+            collectionSizeEl.textContent = stats.total_collections;
+        }
+
+        // ==================== MODAL MANAGEMENT ====================
+        async function openModal(modal) {
+            await Animations.fadeIn(modal);
+        }
+
+        // ==================== DATA MANAGEMENT ====================
+        function exportData() {
+            const data = db.exportData();
+            const blob = new Blob([data], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'movie-collection-data.json';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            
+            NotificationSystem.show("Data exported successfully!", "success");
+        }
+
+        function importData() {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = '.json';
+            
+            input.addEventListener('change', function(e) {
+                const file = e.target.files[0];
+                if (!file) return;
+                
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const result = db.importData(e.target.result);
+                    
+                    if (result.success) {
+                        // Refresh UI
+                        renderUsers();
+                        updateStats();
+                        
+                        if (db.getUsers().length > 0) {
+                            const firstUser = db.getUsers()[0];
+                            selectUser(firstUser.id, firstUser.name);
+                        }
+                        
+                        NotificationSystem.show(result.message, "success");
+                    } else {
+                        NotificationSystem.show(result.message, "error");
+                    }
+                };
+                reader.readAsText(file);
+            });
+            
+            input.click();
+        }
+
+        function clearAllData() {
+            if (!confirm("Are you sure you want to clear ALL data? This cannot be undone!")) {
+                return;
+            }
+            
+            if (!confirm("⚠️ WARNING: This will delete ALL users, movies, and comments. Are you absolutely sure?")) {
+                return;
+            }
+            
+            const result = db.clearAllData();
+            
+            if (result.success) {
+                // Refresh UI
+                renderUsers();
+                updateStats();
+                
+                currentState.userId = null;
+                selectedUserName.textContent = "Select a User";
+                moviesContainer.innerHTML = `
+                    <div class="loading">
+                        <i class="fas fa-film"></i>
+                        <p>Select a user or view all movies</p>
+                    </div>
+                `;
+                
+                NotificationSystem.show(result.message, "success");
+            }
+        }
+
+        // ==================== INITIALIZE APPLICATION ====================
+        document.addEventListener('DOMContentLoaded', async () => {
+            // Add CSS for ripple effect
+            const style = document.createElement('style');
+            style.textContent = `
+                .ripple-effect {
+                    position: absolute;
+                    border-radius: 50%;
+                    background: rgba(255, 255, 255, 0.6);
+                    transform: scale(0);
+                    animation: ripple 0.6s linear;
+                }
+                
+                @keyframes shake {
+                    0%, 100% { transform: translateX(0); }
+                    10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+                    20%, 40%, 60%, 80% { transform: translateX(5px); }
+                }
+                
+                @keyframes fadeOut {
+                    from { opacity: 1; }
+                    to { opacity: 0; }
+                }
+            `;
+            document.head.appendChild(style);
+            
+            // Start the application
+            await initializeAuth();
+        });
+    </script>
+</body>
+</html>
